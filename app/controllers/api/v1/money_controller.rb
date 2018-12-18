@@ -1,4 +1,4 @@
-class MoneyController < ApplicationController
+class Api::V1::MoneyController < ApplicationController
   def create
 
   end

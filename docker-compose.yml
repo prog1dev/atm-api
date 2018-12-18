@@ -1,0 +1,18 @@
+version: '3.0'
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  web:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    environment:
+      RAILS_ENV: development
+      SECRET_KEY_BASE: 'Development_key_base'
+    ports:
+      - 3000:3000
+    links:
+      - db
+    depends_on:
+      - db

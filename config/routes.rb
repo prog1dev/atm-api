@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   namespace :api do
-    post :money, to: 'money#create'
-    patch :money, to: 'money#update'
+    namespace :v1 do
+      namespace :money do
+        post  :refill,   to: 'refills#create'
+        patch :withdraw, to: 'withdraws#update', as: :withdraw
+      end
+    end
   end
 end

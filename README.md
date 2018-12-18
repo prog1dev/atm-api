@@ -9,5 +9,5 @@ bundle && rake db:setup
 Or with `docker-compose`:
 
 ```
-docker-compose run web rake db:create && docker-compose up
+docker-compose run web rake db:setup && docker-compose up
 ```

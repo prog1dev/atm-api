@@ -7,6 +7,6 @@ COPY Gemfile /app/
 COPY Gemfile.lock /app/
 
 ENV RAILS_ENV production
-RUN bundle install --without test
+RUN bundle install
 
 COPY . /app

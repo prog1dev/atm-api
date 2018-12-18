@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+  include ActionController::RequestForgeryProtection
+
   around_action :process_errors
   protect_from_forgery with: :null_session
 

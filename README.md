@@ -14,5 +14,6 @@
 ## Installation
 
 ```ruby
-git clone git@github.com:prog1dev/atm-api.git && cd atm-api && bundle && rake db:setup
+docker-compose up
+docker-compose run web rake db:create
 ```

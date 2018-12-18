@@ -1,4 +1,4 @@
-class Money::RefillsController < ApplicationController
+class Api::V1::Money::RefillsController < ApplicationController
   def create
     result = Money::Refill.new(params).call
 

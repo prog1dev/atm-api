@@ -10,7 +10,6 @@ development:
   <<: *default
   database: atm_api_development
 
-
 test:
   <<: *default
   database: atm_api_test

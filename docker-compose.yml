@@ -7,6 +7,8 @@ services:
   web:
     build: .
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/app
     environment:
       RAILS_ENV: development
       SECRET_KEY_BASE: 'Development_key_base'

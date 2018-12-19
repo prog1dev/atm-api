@@ -8,7 +8,7 @@ class Money::Withdraw
 
   def call(total)
     Money.transaction do
-      available_bills = Money.pluck(:value, :count).to_h.sort_by { |k, v| -k }.to_h
+      available_bills = Money.pluck(:denomination, :count).to_h.sort_by { |k, v| -k }.to_h
       result = {}
 
       available_bills.each do |denomination, count|
@@ -22,7 +22,7 @@ class Money::Withdraw
       raise 'Not enough bills available' if total > 0
 
       result.each do |k, v|
-        money = Money.find_by!(value: k)
+        money = Money.find_by!(denomination: k)
         money.count -= v
         money.save!
       end

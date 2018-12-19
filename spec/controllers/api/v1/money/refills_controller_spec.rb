@@ -6,7 +6,7 @@ describe Api::V1::Money::RefillsController, type: :controller do
       available_values = [1, 2, 5, 10, 25, 50]
 
       available_values.each do |value|
-        Money.create!(value: value, count: 0)
+        Money.create!(denomination: value, count: 0)
       end
     end
 
@@ -25,7 +25,7 @@ describe Api::V1::Money::RefillsController, type: :controller do
 
       it 'refills atms money' do
         refill_money.each do |k, v|
-          expect(Money.find_by!(value: k).count).to eq v
+          expect(Money.find_by!(denomination: k).count).to eq v
         end
       end
     end

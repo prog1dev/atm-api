@@ -9,7 +9,7 @@ class Money::Refill
   def call(params)
     Money.transaction do
       params.each do |denomination, count|
-        money = Money.find_by!(value: denomination)
+        money = Money.find_by!(denomination: denomination)
         money.lock!
         money.count += count.to_i
         money.save!

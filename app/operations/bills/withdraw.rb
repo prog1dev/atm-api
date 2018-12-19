@@ -8,24 +8,9 @@ class Bills::Withdraw
 
   def call(total)
     Bill.transaction do
-      available_bills = Bill.pluck(:denomination, :count).to_h.sort_by { |k, v| -k }.to_h
-      result = {}
+      bills_to_withdraw = calc_bills_to_withdraw(total)
 
-      available_bills.each do |denomination, count|
-        available_bills_count = total / denomination
-
-        bills = available_bills_count < count ? available_bills_count : count
-        result[denomination] = bills
-        total -= bills * denomination
-      end
-
-      raise 'Not enough bills available' if total > 0
-
-      result.each do |k, v|
-        bills = Bill.find_by!(denomination: k)
-        bills.count -= v
-        bills.save!
-      end
+      withdraw_from_db(bills_to_withdraw)
     end
 
     @success = true
@@ -41,5 +26,32 @@ class Bills::Withdraw
 
   def successful?
     @success
+  end
+
+  private
+
+  def calc_bills_to_withdraw(total_to_withdraw)
+    available_bills = Bill.pluck(:denomination, :count).to_h.sort_by { |k, v| -k }.to_h
+    result = {}
+
+    available_bills.each do |denomination, count|
+      available_bills_count = total_to_withdraw / denomination
+
+      bills = available_bills_count < count ? available_bills_count : count
+      result[denomination] = bills
+      total_to_withdraw -= bills * denomination
+    end
+
+    raise 'Not enough bills available' if total_to_withdraw > 0
+
+    result
+  end
+
+  def withdraw_from_db(bills_to_withdraw)
+    bills_to_withdraw.each do |denomination, count|
+      bills = Bill.find_by!(denomination: denomination)
+      bills.count -= count
+      bills.save!
+    end
   end
 end

@@ -6,9 +6,9 @@ class Bills::Refill
     @success = nil
   end
 
-  def call(params)
+  def call(bills_to_refill)
     Bill.transaction do
-      params.each do |denomination, count|
+      bills_to_refill.each do |denomination, count|
         bills = Bill.find_by!(denomination: denomination)
         bills.lock!
         bills.count += count.to_i

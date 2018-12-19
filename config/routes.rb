@@ -5,6 +5,10 @@ Rails.application.routes.draw do
         post  :refill,   to: 'refills#create'
         patch :withdraw, to: 'withdraws#update', as: :withdraw
       end
+
+      resource :bills, only: [:create] do
+        patch :update, to: 'bills#update'
+      end
     end
   end
 end

@@ -42,7 +42,7 @@ class Bills::Withdraw
       total_to_withdraw -= bills * denomination
     end
 
-    raise 'Not enough bills available' if total_to_withdraw > 0
+    raise NotEnoughBillsAvailable.new('Not enough bills available') if total_to_withdraw > 0
 
     result
   end
@@ -54,4 +54,6 @@ class Bills::Withdraw
       bills.save!
     end
   end
+
+  class NotEnoughBillsAvailable < StandardError; end
 end

@@ -8,10 +8,10 @@ class Money::Refill
 
   def call(params)
     Money.transaction do
-      @params.each do |par_value, count|
-        money = Money.find_by!(value: par_value)
+      params.each do |denomination, count|
+        money = Money.find_by!(value: denomination)
         money.lock!
-        money.count += count
+        money.count += count.to_i
         money.save!
       end
     end

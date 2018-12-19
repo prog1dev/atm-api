@@ -1,11 +1,11 @@
 class Api::V1::Money::RefillsController < ApplicationController
   def create
-    result = Money::Refill.new(params).call
+    refill_operation = Money::Refill.new.call(params)
 
-    if result.successful?
+    if refill_operation.successful?
       head :ok
     else
-      render json: { error: result.error }, status: :unprocessable_entity
+      render json: { error: refill_operation.error }, status: :unprocessable_entity
     end
   end
 end

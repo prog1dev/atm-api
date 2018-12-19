@@ -1,9 +1,23 @@
 class Money::Withdraw
-  def initialize(total)
-    @total = total
+  attr_reader :error
+
+  def initialize
+    @error   = nil
+    @success = nil
   end
 
-  def call
+  def call(total)
     # withdraw logic
+
+    @success = true
+  rescue StandardError => e
+    @success = false
+    @error   = e.message
+  ensure
+    return self
+  end
+
+  def successful?
+    @success
   end
 end

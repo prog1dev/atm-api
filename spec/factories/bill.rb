@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :money do
-    value { 0 }
+  factory :bill do
+    denomination { 0 }
     count { 0 }
   end
 end

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Api::V1::Money::WithdrawsController, type: :controller do
+describe Api::V1::Bills::WithdrawsController, type: :controller do
   describe 'PATCH #update' do
     before do
       { 50 => 4, 25 => 6, 10 => 3, 1 => 12 }.each do |k, v|
-        Money.create!(denomination: k, count: v)
+        Bill.create!(denomination: k, count: v)
       end
     end
 

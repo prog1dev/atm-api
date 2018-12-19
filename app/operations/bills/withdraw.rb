@@ -1,4 +1,4 @@
-class Money::Withdraw
+class Bills::Withdraw
   attr_reader :error
 
   def initialize
@@ -7,8 +7,8 @@ class Money::Withdraw
   end
 
   def call(total)
-    Money.transaction do
-      available_bills = Money.pluck(:denomination, :count).to_h.sort_by { |k, v| -k }.to_h
+    Bill.transaction do
+      available_bills = Bill.pluck(:denomination, :count).to_h.sort_by { |k, v| -k }.to_h
       result = {}
 
       available_bills.each do |denomination, count|
@@ -22,9 +22,9 @@ class Money::Withdraw
       raise 'Not enough bills available' if total > 0
 
       result.each do |k, v|
-        money = Money.find_by!(denomination: k)
-        money.count -= v
-        money.save!
+        bills = Bill.find_by!(denomination: k)
+        bills.count -= v
+        bills.save!
       end
     end
 

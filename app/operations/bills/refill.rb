@@ -1,4 +1,4 @@
-class Money::Refill
+class Bills::Refill
   attr_reader :error
 
   def initialize
@@ -7,12 +7,12 @@ class Money::Refill
   end
 
   def call(params)
-    Money.transaction do
+    Bill.transaction do
       params.each do |denomination, count|
-        money = Money.find_by!(denomination: denomination)
-        money.lock!
-        money.count += count.to_i
-        money.save!
+        bills = Bill.find_by!(denomination: denomination)
+        bills.lock!
+        bills.count += count.to_i
+        bills.save!
       end
     end
 

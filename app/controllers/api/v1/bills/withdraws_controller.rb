@@ -1,8 +1,8 @@
-class Api::V1::Money::WithdrawsController < ApplicationController
+class Api::V1::Bills::WithdrawsController < ApplicationController
   def update
     permited_params = params.permit(:total)
 
-    withdraw_operation = Money::Withdraw.new.call(permited_params.fetch(:total).to_i)
+    withdraw_operation = ::Bills::Withdraw.new.call(permited_params.fetch(:total).to_i)
 
     if withdraw_operation.successful?
       head :ok

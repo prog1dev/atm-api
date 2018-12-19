@@ -1,2 +1,0 @@
-class Money < ApplicationRecord
-end

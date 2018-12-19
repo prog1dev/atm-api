@@ -29,9 +29,9 @@ describe Api::V1::Money::WithdrawsController, type: :controller do
 
       it 'returns correct error message' do
         parsed_response = JSON.parse(response.body, symbolize_names: true)
+
         expect(parsed_response.fetch(:error)).to eq 'Not enough bills available'
       end
     end
   end
 end
-

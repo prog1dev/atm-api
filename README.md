@@ -27,8 +27,16 @@ docker-compose run web rake db:setup && docker-compose up
 
 ## Api
 
-Пополнение - `POST /api/v1/bills/refill`
-req body example: bills: { 50 => 3, 25 => 2 }
+Пополнение:
+```ruby
+POST /api/v1/bills/refill
 
-Выдача - `PATCH /api/v1/bills/withdraw`
+req body example: bills: { 50 => 3, 25 => 2 }
+```
+
+Выдача:
+```ruby
+PATCH /api/v1/bills/withdraw
+
 req body example: total: 200
+```

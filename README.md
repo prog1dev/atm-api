@@ -29,14 +29,14 @@ docker-compose run web rake db:setup && docker-compose up
 
 Пополнение:
 ```ruby
-POST /api/v1/bills/refill
+POST /api/v1/bills
 
 req body example: bills: { 50 => 3, 25 => 2 }
 ```
 
 Выдача:
 ```ruby
-PATCH /api/v1/bills/withdraw
+PATCH /api/v1/bills
 
 req body example: total: 200
 ```

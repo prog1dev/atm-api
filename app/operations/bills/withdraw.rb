@@ -19,7 +19,7 @@ class Bills::Withdraw
     @success = true
   rescue PG::CheckViolation => e
     @success = false
-    @error   = 'Not enough bills available'
+    @error   = NotEnoughBillsAvailable.new('Not enough bills available')
   rescue StandardError => e
     @success = false
     @error   = e.message
@@ -34,15 +34,15 @@ class Bills::Withdraw
   private
 
   def calc_bills_to_withdraw(total_to_withdraw)
-    available_bills = Bill.pluck(:denomination, :count).to_h.sort_by { |k, v| -k }.to_h
+    available_bills = Bill.order(denomination: :desc).pluck(:denomination, :count).to_h
     result = {}
 
     available_bills.each do |denomination, count|
-      available_bills_count = total_to_withdraw / denomination
+      bills_to_withdraw = total_to_withdraw / denomination
 
-      bills = available_bills_count < count ? available_bills_count : count
-      result[denomination] = bills
-      total_to_withdraw -= bills * denomination
+      bills_to_withdraw = bills_to_withdraw < count ? bills_to_withdraw : count
+      result[denomination] = bills_to_withdraw
+      total_to_withdraw -= bills_to_withdraw * denomination
     end
 
     raise NotEnoughBillsAvailable.new('Not enough bills available') if total_to_withdraw > 0

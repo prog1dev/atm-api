@@ -1,9 +1,10 @@
 class Bills::Withdraw
-  attr_reader :error
+  attr_reader :error, :result
 
   def initialize
     @error   = nil
     @success = nil
+    @result  = nil
   end
 
   def call(total)
@@ -11,6 +12,8 @@ class Bills::Withdraw
       bills_to_withdraw = calc_bills_to_withdraw(total)
 
       withdraw_from_db(bills_to_withdraw)
+
+      @result = format_result(bills_to_withdraw)
     end
 
     @success = true
@@ -53,6 +56,10 @@ class Bills::Withdraw
       bills.count -= count
       bills.save!
     end
+  end
+
+  def format_result(bills_to_withdraw)
+    bills_to_withdraw.reject { |_, count| count.zero? }
   end
 
   class NotEnoughBillsAvailable < StandardError; end

@@ -46,6 +46,12 @@ describe Api::V1::BillsController, type: :controller do
       it 'returns 200' do
         expect(response.status).to eq 200
       end
+
+      it 'returns correct body response' do
+        parsed_response = JSON.parse(response.body)
+
+        expect(parsed_response).to eq({ "bills" => { "50" => 4 } })
+      end
     end
 
     context 'with total more than available in atm' do

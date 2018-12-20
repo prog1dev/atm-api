@@ -17,7 +17,7 @@ class Api::V1::BillsController < ApplicationController
     withdraw_operation = ::Bills::Withdraw.new.call(permited_params.fetch(:total).to_i)
 
     if withdraw_operation.successful?
-      head :ok
+      render json: { bills: withdraw_operation.result }
     else
       render json: { error: withdraw_operation.error }, status: :unprocessable_entity
     end

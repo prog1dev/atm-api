@@ -5,7 +5,7 @@ class Api::V1::BillsController < ApplicationController
     refill_operation = ::Bills::Refill.new.call(permited_params)
 
     if refill_operation.successful?
-      head :ok
+      head :created
     else
       render json: { error: refill_operation.error }, status: :unprocessable_entity
     end

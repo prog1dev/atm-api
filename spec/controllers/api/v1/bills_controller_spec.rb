@@ -19,8 +19,8 @@ describe Api::V1::BillsController, type: :controller do
         post :create, params: { bills: refill_bills }
       end
 
-      it 'returns 200' do
-        expect(response.status).to eq 200
+      it 'returns 201' do
+        expect(response.status).to eq 201
       end
 
       it 'refills atm bills' do
